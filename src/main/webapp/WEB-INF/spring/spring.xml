@@ -1,0 +1,79 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <context:component-scan base-package="com.javaschool.ecare" scoped-proxy="targetClass"/>
+
+    <jee:jndi-lookup jndi-name="java:/eCareDS"
+                     id="dataSource"
+                     expected-type="javax.sql.DataSource"/>
+
+    <jee:jndi-lookup jndi-name="java:comp/env/eCare/EntityManagerFactory"
+                     id="entityManagerFactory"
+                     expected-type="javax.persistence.EntityManagerFactory"/>
+    <tx:jta-transaction-manager/>
+    <tx:annotation-driven/>
+
+    <mvc:annotation-driven conversion-service="conversionService"/>
+    <bean class="org.springframework.context.support.ConversionServiceFactoryBean" id="conversionService">
+        <property name="converters">
+            <set>
+                <bean class="com.javaschool.ecare.converter.StringListToOptionConverter"/>
+                <bean class="com.javaschool.ecare.converter.StringToOptionConverter"/>
+                <bean class="com.javaschool.ecare.converter.StringToDateConverter"/>
+                <bean class="com.javaschool.ecare.converter.StringToTariffConverter"/>
+                <bean class="com.javaschool.ecare.converter.StringToClientConverter"/>
+                <bean class="com.javaschool.ecare.converter.StringToCalendarConverter"/>
+            </set>
+        </property>
+    </bean>
+    <bean id="contractValidator" class="com.javaschool.ecare.validator.ContractValidator"/>
+    <bean id="tariffValidator" class="com.javaschool.ecare.validator.TariffValidator"/>
+    <bean id="optionValidator" class="com.javaschool.ecare.validator.OptionValidator"/>
+    <bean id="userValidator" class="com.javaschool.ecare.validator.UserValidator"/>
+    <bean id="clientValidator" class="com.javaschool.ecare.validator.ClientValidator"/>
+
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions" value="/WEB-INF/tiles/tiles-templates.xml"/>
+        <property name="preparerFactoryClass"
+                  value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+        <property name="requestContextAttribute" value="requestContext"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
+
+    <mvc:interceptors>
+        <bean id="localChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="language"/>
+        </bean>
+    </mvc:interceptors>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:i18n/messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean id="cartFilterBean" class="com.javaschool.ecare.filter.CartFilter"></bean>
+    <!-- Файл с настройками безопасности -->
+    <import resource="security.xml"/>
+
+</beans>

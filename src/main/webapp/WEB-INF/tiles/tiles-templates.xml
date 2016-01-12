@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <definition name="base-template" template="/WEB-INF/templates/base-template.jsp">
+        <put-attribute name="title" value="Default title" />
+        <put-attribute name="header" value="/WEB-INF/templates/header.jsp" />
+        <put-attribute name="navigation" cascade="true" value="/WEB-INF/templates/navigation.jsp" />
+        <put-attribute name="cart" cascade="true" value="/WEB-INF/templates/cart.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="bodystyle" value="" />
+        <put-list-attribute name="javascripts">
+            <add-attribute value="https://code.jquery.com/jquery-2.1.4.min.js" />
+            <add-attribute value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" />
+            <add-attribute value="/resources/materialadmin.js" />
+            <add-attribute value="/resources/Demo.js" />
+        </put-list-attribute>
+    </definition>
+    <definition name="index" extends="base-template">
+        <put-attribute name="title" value="Main page" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/index.jsp" />
+    </definition>
+    <definition name="option" extends="base-template">
+        <put-attribute name="title" value="Options" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/options.jsp" />
+        <put-attribute name="position" value="allOptions" />
+    </definition>
+    <definition name="tariff" extends="base-template">
+        <put-attribute name="title" value="Tariffs" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/tariffs.jsp" />
+        <put-attribute name="position" value="allTariffs" />
+        <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/resources/toastr.js" />
+            <add-attribute value="/resources/comparelist.js" />
+        </put-list-attribute>
+    </definition>
+    <definition name="new-option-page" extends="base-template">
+        <put-attribute name="title" value="Add new option" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/option-page.jsp" />
+        <put-attribute name="position" value="addOption" />
+        <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/resources/option.js" />
+        </put-list-attribute>
+    </definition>
+    <definition name="new-tariff-page" extends="base-template">
+        <put-attribute name="title" value="addTariff" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/tariff-page.jsp" />
+        <put-attribute name="position" value="tariff" />
+    </definition>
+    <definition name="option-page" extends="new-option-page">
+        <put-attribute name="title" expression="Edit ${option.name}" />
+        <put-attribute name="position" value="options" />
+    </definition>
+    <definition name="tariff-page" extends="new-tariff-page">
+        <put-attribute name="title" expression="Edit ${tariff.name}" />
+        <put-attribute name="position" value="tariffs" />
+    </definition>
+    <definition name="client" extends="base-template">
+        <put-attribute name="title" value="Clients" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/clients.jsp" />
+        <put-attribute name="position" value="allClients" />
+    </definition>
+    <definition name="client-registration" extends="base-template">
+        <put-attribute name="title" value="New client" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/client-registration.jsp" />
+        <put-attribute name="position" value="addClient" />
+        <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/resources/contract.js" />
+        </put-list-attribute>
+    </definition>
+    <definition name="contract-page" extends="base-template">
+        <put-attribute name="title" expression="Contract +${contract.number}" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/contract-page.jsp" />
+        <put-attribute name="position" value="clients" />
+    </definition>
+    <definition name="login" extends="base-template">
+        <put-attribute name="title" value="Login page" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/login.jsp" />
+        <put-attribute name="navigation" value="" />
+        <put-attribute name="bodystyle" value="menubar-hidden" />
+    </definition>
+    <definition name="cabinet-main" extends="base-template">
+        <put-attribute name="title" expression="Welcome to personal area!" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/my-contracts.jsp" />
+        <put-attribute name="position" value="myContracts" />
+    </definition>
+    <definition name="compare-list" extends="base-template">
+        <put-attribute name="title" expression="Compare list" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/tariff-compare-list.jsp" />
+        <put-attribute name="position" value="myTariffs" />
+    </definition>
+    <definition name="client-page" extends="base-template">
+        <put-attribute name="title" expression="Client ${client.user.firstName} ${client.user.lastName}" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/client-page.jsp" />
+        <put-attribute name="position" value="clients" />
+    </definition>
+    <definition name="contract-registration" extends="base-template">
+        <put-attribute name="title" value="New contract" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/contract-registration.jsp" />
+        <put-attribute name="position" value="clients" />
+        <put-list-attribute name="javascripts" inherit="true">
+            <add-attribute value="/resources/contract.js" />
+        </put-list-attribute>
+    </definition>
+    <definition name="404" extends="base-template">
+        <put-attribute name="title" value="404" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/404.jsp" />
+    </definition>
+    <definition name="error" extends="base-template">
+        <put-attribute name="title" value="Error" />
+        <put-attribute name="content" value="/WEB-INF/templates/layouts/error.jsp"/>
+    </definition>
+</tiles-definitions>

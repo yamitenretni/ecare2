@@ -1,0 +1,52 @@
+.menubar-hidden #base{
+    padding-left: 0;
+}
+
+.card-head header {
+    margin-top: 8px;
+}
+
+form {
+    margin-bottom: 0;
+}
+
+.form-group.checkboxes {
+    padding-top: 24px;
+}
+
+.user-info {
+    height: 36px;
+    padding-top: 5px;
+}
+
+.gui-controls {
+    margin-top: 24px;
+}
+
+.gui-controls .gui-icon {
+    font-size: 24px;
+}
+
+.gui-controls > li > a {
+    font-size: 14px;
+}
+
+.gui-controls > li ul > li > a {
+    font-size: 14px;
+}
+
+.compare-table th {
+    text-align: center;
+}
+
+.fa-briefcase {
+    font-size: 16px;
+}
+
+.fa-users {
+    font-size: 16px;
+}
+
+.fa-tasks {
+    font-size: 16px;
+}
